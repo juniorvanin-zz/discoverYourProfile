@@ -2,12 +2,12 @@
 
 import React from "react";
 
-import { Typing } from "./Typing";
+import { Typing } from "../Typing";
 
 import "./styles.scss";
 
-const Chatbot = () => (
-  <div className="chatbot">
+const Chat = () => (
+  <div className="chat">
     <MessageGroup style="robot">
       <Message text="Oi, eu sou o Warren! Vou ajudar você a investir o seu dinheiro da melhor forma! Para isso, quero conhecer você melhor." />
       <Message text="Como eu posso te chamar?" />
@@ -48,4 +48,4 @@ const MessageGroup = ({ children, style }: MessageGroupProps) => {
 };
 const Message = ({ text }: MessageProps) => <p className="message">{text}</p>;
 
-export { Chatbot };
+export { Chat };
