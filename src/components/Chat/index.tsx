@@ -5,6 +5,7 @@ import React from "react";
 import { Typing } from "../Typing";
 
 import "./styles.scss";
+import { UserIcon } from "../UserIcon";
 
 const Chat = () => (
   <div className="chat">
@@ -21,7 +22,6 @@ const Chat = () => (
     </MessageGroup>
     <MessageGroup style="user">
       <Message text="Eu tenho 26 anos." />
-      <Typing />
     </MessageGroup>
     <MessageGroup style="robot">
       <Message text="Os 30 estão chegando!" />
@@ -44,7 +44,13 @@ const MessageGroup = ({ children, style }: MessageGroupProps) => {
     "message-group message-group_theme_" +
     (style === "robot" ? "robot" : "user");
 
-  return <div className={classes}>{children}</div>;
+  return (
+    <div className={classes}>
+      {style === "robot" && <UserIcon />}
+      <div className="message-group__messages">{children}</div>
+      {style === "user" && <UserIcon name="Wanderlei da Silva" />}
+    </div>
+  );
 };
 const Message = ({ text }: MessageProps) => <p className="message">{text}</p>;
 

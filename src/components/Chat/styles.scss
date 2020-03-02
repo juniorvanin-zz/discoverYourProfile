@@ -7,10 +7,9 @@
 .message-group {
   display: flex;
   margin: 10px;
-  flex-direction: column;
 
   &_theme_robot {
-    align-items: flex-start;
+    justify-content: flex-start;
 
     .message {
       background-color: #f1f0f0;
@@ -19,7 +18,7 @@
   }
 
   &_theme_user {
-    align-items: flex-end;
+    justify-content: flex-end;
 
     .message {
       background-color: #ee2e5d;
@@ -33,7 +32,6 @@
   margin: 0;
   font-size: 16px;
   line-height: 1.5rem;
-  max-width: 50%;
   margin-bottom: 5px;
   text-align: left;
 }
@@ -52,9 +50,15 @@
 }
 
 .message-group_theme_user .message:first-of-type {
-  border-bottom-right-radius: 24px;
+  border-top-right-radius: 24px;
 }
 
 .message-group_theme_user .message:last-of-type {
-  border-top-left-radius: 24px;
+  border-bottom-left-radius: 24px;
+}
+
+.message-group__messages {
+  display: flex;
+  flex-direction: column;
+  max-width: 70%;
 }
