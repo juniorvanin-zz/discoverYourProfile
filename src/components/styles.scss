@@ -43,18 +43,18 @@
   color: #1b1b1b;
 }
 
-.message-group_theme_robot .message:first-child {
+.message-group_theme_robot .message:first-of-type {
   border-top-left-radius: 24px;
 }
 
-.message-group_theme_robot .message:last-child {
+.message-group_theme_robot .message:last-of-type {
   border-bottom-right-radius: 24px;
 }
 
-.message-group_theme_user .message:first-child {
+.message-group_theme_user .message:first-of-type {
   border-bottom-right-radius: 24px;
 }
 
-.message-group_theme_user .message:last-child {
+.message-group_theme_user .message:last-of-type {
   border-top-left-radius: 24px;
 }

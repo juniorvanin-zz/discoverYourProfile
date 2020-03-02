@@ -2,6 +2,8 @@
 
 import React from "react";
 
+import { Typing } from "./Typing";
+
 import "./styles.scss";
 
 const Chatbot = () => (
@@ -19,9 +21,11 @@ const Chatbot = () => (
     </MessageGroup>
     <MessageGroup style="user">
       <Message text="Eu tenho 26 anos." />
+      <Typing />
     </MessageGroup>
     <MessageGroup style="robot">
       <Message text="Os 30 estão chegando!" />
+      <Typing />
     </MessageGroup>
   </div>
 );
