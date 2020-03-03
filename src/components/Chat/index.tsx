@@ -2,9 +2,7 @@
 
 import React from "react";
 
-import { Typing } from "../Typing";
-import { TextInputActionBar } from "../ActionBar";
-import { UserIcon } from "../UserIcon";
+import { Typing, TextInputActionBar, UserIcon } from "components";
 
 import "./styles.scss";
 

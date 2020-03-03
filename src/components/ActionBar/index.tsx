@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { TextInput, Button } from "../Input";
+import { TextInput, Button } from "components";
 
 import "./style.scss";
 
