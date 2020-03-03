@@ -1,0 +1,51 @@
+.text-input {
+  background-color: transparent;
+  border: 0;
+  outline: none;
+  font-size: 26px;
+  font-family: "Montserrat";
+  color: #333333;
+  border-bottom: 1px solid #8c8c8c;
+  padding: 10px;
+  flex-grow: 1;
+  margin-right: 20px;
+}
+
+.text-input::placeholder {
+  color: #8c8c8c;
+  text-transform: lowercase;
+}
+
+.button {
+  padding: 20px 35px;
+  background-color: #ee2e5d;
+  color: white;
+  border-radius: 30px;
+  font-size: 15px;
+  font-family: "Montserrat";
+  text-transform: uppercase;
+  border: 0;
+  font-weight: bold;
+  margin: 0 5px;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 0.6;
+  }
+}
+
+.button:hover {
+  animation: blink 0.5s linear;
+  cursor: pointer;
+  animation-fill-mode: both;
+}
+
+.button:disabled {
+  background-color: #bdbdbd;
+  color: #5d5d5d;
+}

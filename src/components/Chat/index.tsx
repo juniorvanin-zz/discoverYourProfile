@@ -3,9 +3,10 @@
 import React from "react";
 
 import { Typing } from "../Typing";
+import { TextInputActionBar } from "../ActionBar";
+import { UserIcon } from "../UserIcon";
 
 import "./styles.scss";
-import { UserIcon } from "../UserIcon";
 
 const Chat = () => (
   <div className="chat">
@@ -27,6 +28,7 @@ const Chat = () => (
       <Message text="Os 30 estão chegando!" />
       <Typing />
     </MessageGroup>
+    <TextInputActionBar />
   </div>
 );
 
