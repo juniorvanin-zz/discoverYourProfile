@@ -1,20 +1,72 @@
 /* eslint-disable react/style-prop-object */
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 
 import { Typing, UserIcon, InputTypeChooser } from "components";
+import { useConversationApi } from "services";
 
 import "./styles.scss";
 
+type MessageGroupType = {
+  type: "robot" | "user";
+  messages: Array<string>;
+};
+
+type ChatManagerState = {
+  currentQuestionId: string;
+  answers: {
+    [key: string]: string;
+  };
+  messages: Array<MessageGroupType>;
+};
+
 const ChatManager = () => {
-  const [state, setState] = useState({ answers: {} });
+  const [state, setState] = useState<ChatManagerState>({
+    currentQuestionId: "",
+    answers: {},
+    messages: []
+  });
+
+  const [data, isLoaded, setPayload] = useConversationApi();
+
+  const dateHash = JSON.stringify(data);
+  useEffect(() => {
+    if (isLoaded) {
+      const robotMessages = {
+        type: "robot",
+        // @ts-ignore
+        messages: data.messages.map(m => m.value)
+      };
+      const messages = [...state.messages, robotMessages];
+
+      // @ts-ignore
+      setState({ ...state, messages, currentQuestionId: data.id });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dateHash]);
 
   const saveAnswer = (id: string) => (value: string) => {
-    setState({ ...state, answers: { [id]: value } });
+    const userMessage: MessageGroupType = {
+      type: "user",
+      messages: [value]
+    };
+
+    const answers = { ...state.answers, [id]: value };
+    const messages = [...state.messages, userMessage];
+
+    setState({ ...state, answers, messages });
+    setPayload({
+      id,
+      context: "suitability",
+      answers
+    });
   };
 
   return (
-    <ChatWrapper inputType="string" saveAnswer={saveAnswer("question_name")} />
+    <ChatWrapper
+      inputType="string"
+      saveAnswer={saveAnswer(state.currentQuestionId)}
+    />
   );
 };
 
