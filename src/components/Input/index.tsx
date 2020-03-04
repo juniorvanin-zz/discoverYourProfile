@@ -16,7 +16,6 @@ const TextInput = ({
   <input
     className="text-input"
     type="text"
-    placeholder="Digite seu nome"
     value={value}
     onChange={e => {
       const newValue = e.target.value;
@@ -31,10 +30,15 @@ const TextInput = ({
 type ButtonProps = {
   disabled?: boolean;
   title?: string;
+  handleOnClick: () => void;
 };
 
-const Button = ({ disabled = false, title = "OK" }: ButtonProps) => (
-  <button className="button" disabled={disabled}>
+const Button = ({
+  disabled = false,
+  title = "OK",
+  handleOnClick
+}: ButtonProps) => (
+  <button className="button" disabled={disabled} onClick={handleOnClick}>
     {title}
   </button>
 );

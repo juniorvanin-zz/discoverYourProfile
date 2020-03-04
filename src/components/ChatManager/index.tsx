@@ -1,13 +1,31 @@
 /* eslint-disable react/style-prop-object */
 
-import React from "react";
+import React, { useState } from "react";
 
-import { Typing, TextInputActionBar, UserIcon } from "components";
+import { Typing, UserIcon, InputTypeChooser } from "components";
 
 import "./styles.scss";
 
-const Chat = () => (
-  <div className="chat">
+const ChatManager = () => {
+  const [state, setState] = useState({ answers: {} });
+
+  const saveAnswer = (id: string) => (value: string) => {
+    setState({ ...state, answers: { [id]: value } });
+  };
+
+  return (
+    <ChatWrapper inputType="string" saveAnswer={saveAnswer("question_name")} />
+  );
+};
+
+type InputType = "number" | "string" | "buttons";
+type ChatProps = {
+  saveAnswer: (value: string) => void;
+  inputType: InputType;
+};
+
+const ChatWrapper = ({ saveAnswer, inputType }: ChatProps) => (
+  <div className="chat-wrapper">
     <MessageGroup style="robot">
       <Message text="Oi, eu sou o Warren! Vou ajudar você a investir o seu dinheiro da melhor forma! Para isso, quero conhecer você melhor." />
       <Message text="Como eu posso te chamar?" />
@@ -26,7 +44,7 @@ const Chat = () => (
       <Message text="Os 30 estão chegando!" />
       <Typing />
     </MessageGroup>
-    <TextInputActionBar />
+    <InputTypeChooser type={inputType} finishCallback={saveAnswer} />
   </div>
 );
 
@@ -54,4 +72,4 @@ const MessageGroup = ({ children, style }: MessageGroupProps) => {
 };
 const Message = ({ text }: MessageProps) => <p className="message">{text}</p>;
 
-export { Chat };
+export { ChatManager };

@@ -10,7 +10,11 @@ const ActionBar = ({ children }: ActionBarProps) => (
   <footer className="footer">{children}</footer>
 );
 
-const TextInputActionBar = () => {
+type InputActionBarProps = {
+  finishCallback: (value: string) => void;
+};
+
+const TextInputActionBar = ({ finishCallback }: InputActionBarProps) => {
   const [value, setValue] = useState("");
   const isContinueBtnDisable = value === "";
 
@@ -18,20 +22,27 @@ const TextInputActionBar = () => {
     <ActionBar>
       <>
         <TextInput value={value} setValue={setValue} />
-        <Button disabled={isContinueBtnDisable} />
+        <Button
+          disabled={isContinueBtnDisable}
+          handleOnClick={() => finishCallback(value)}
+        />
       </>
     </ActionBar>
   );
 };
 
-const NumberInputActionBar = () => {
+const NumberInputActionBar = ({ finishCallback }: InputActionBarProps) => {
   const [value, setValue] = useState("");
+  const isContinueBtnDisable = value === "";
 
   return (
     <ActionBar>
       <>
         <TextInput value={value} setValue={setValue} isValid={isNumber} />
-        <Button />
+        <Button
+          disabled={isContinueBtnDisable}
+          handleOnClick={() => finishCallback(value)}
+        />
       </>
     </ActionBar>
   );
@@ -40,19 +51,53 @@ const NumberInputActionBar = () => {
 const isNumber = (value: string) => /^[0-9]*$/.test(value);
 
 type ButtonsInputActionBarProps = {
-  buttons: Array<{ title: string }>;
+  buttons: Array<{ title: string; value: string }>;
+  finishCallback: (value: string) => void;
 };
 
-const ButtonsInputActionBar = ({ buttons }: ButtonsInputActionBarProps) => {
+const ButtonsInputActionBar = ({
+  buttons,
+  finishCallback
+}: ButtonsInputActionBarProps) => {
   return (
     <ActionBar>
       <>
         {buttons.map(button => (
-          <Button title={button.title} />
+          <Button
+            handleOnClick={() => {
+              finishCallback(button.value);
+            }}
+            title={button.title}
+          />
         ))}
       </>
     </ActionBar>
   );
 };
 
-export { TextInputActionBar, NumberInputActionBar, ButtonsInputActionBar };
+type InputType = "number" | "string" | "buttons";
+
+type InputTypeChooserProps = {
+  type: InputType;
+  finishCallback: (value: string) => void;
+};
+
+const InputTypeChooser = ({ type, finishCallback }: InputTypeChooserProps) => {
+  switch (type) {
+    case "number":
+      return <NumberInputActionBar finishCallback={finishCallback} />;
+    case "buttons":
+      return (
+        <ButtonsInputActionBar
+          finishCallback={finishCallback}
+          buttons={[
+            { title: "sim", value: "s" },
+            { title: "não", value: "n" }
+          ]}
+        />
+      );
+    default:
+      return <TextInputActionBar finishCallback={finishCallback} />;
+  }
+};
+export { InputTypeChooser };

@@ -1,12 +1,12 @@
 import React from "react";
 
-import { PageWrapper, Chat } from "components";
+import { PageWrapper, ChatManager } from "components";
 
 import "./style.scss";
 
 const DiscoverYourProfile = () => (
   <PageWrapper title="Descobrindo seu Perfil">
-    <Chat />
+    <ChatManager />
   </PageWrapper>
 );
 
