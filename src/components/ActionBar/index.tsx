@@ -11,7 +11,7 @@ const ActionBar = ({ children }: ActionBarProps) => (
 );
 
 type InputActionBarProps = {
-  finishCallback: (value: string) => void;
+  finishCallback: (value: string, displayValue?: string) => void;
 };
 
 const TextInputActionBar = ({ finishCallback }: InputActionBarProps) => {
@@ -52,7 +52,7 @@ const isNumber = (value: string) => /^[0-9]*$/.test(value);
 
 type ButtonsInputActionBarProps = {
   buttons: Array<{ title: string; value: string }>;
-  finishCallback: (value: string) => void;
+  finishCallback: (value: string, displayValue: string) => void;
 };
 
 const ButtonsInputActionBar = ({
@@ -65,7 +65,7 @@ const ButtonsInputActionBar = ({
         {buttons.map(button => (
           <Button
             handleOnClick={() => {
-              finishCallback(button.value);
+              finishCallback(button.value, button.title);
             }}
             title={button.title}
           />
@@ -77,12 +77,24 @@ const ButtonsInputActionBar = ({
 
 type InputType = "number" | "string" | "buttons";
 
-type InputTypeChooserProps = {
-  type: InputType;
-  finishCallback: (value: string) => void;
+type ButtonType = {
+  label: string;
+  value: string;
 };
 
-const InputTypeChooser = ({ type, finishCallback }: InputTypeChooserProps) => {
+type InputTypeChooserProps = {
+  type: InputType;
+  additionalData: {
+    buttons: Array<ButtonType>;
+  };
+  finishCallback: (value: string, displayValue?: string) => void;
+};
+
+const InputTypeChooser = ({
+  type,
+  additionalData,
+  finishCallback
+}: InputTypeChooserProps) => {
   switch (type) {
     case "number":
       return <NumberInputActionBar finishCallback={finishCallback} />;
@@ -90,10 +102,10 @@ const InputTypeChooser = ({ type, finishCallback }: InputTypeChooserProps) => {
       return (
         <ButtonsInputActionBar
           finishCallback={finishCallback}
-          buttons={[
-            { title: "sim", value: "s" },
-            { title: "não", value: "n" }
-          ]}
+          buttons={additionalData.buttons.map(button => ({
+            title: button.label,
+            value: button.value
+          }))}
         />
       );
     default:

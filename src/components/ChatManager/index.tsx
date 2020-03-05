@@ -8,10 +8,17 @@ type MessageGroupType = {
   messages: Array<string>;
 };
 
+type ButtonType = {
+  label: string;
+  value: string;
+};
+
 type ChatManagerState = {
   question: {
     id: string;
     responseTemplate: string;
+    inputType: "string" | "number" | "buttons";
+    buttons: Array<ButtonType>;
   };
   answers: {
     [key: string]: string;
@@ -23,7 +30,9 @@ const ChatManager = () => {
   const [state, setState] = useState<ChatManagerState>({
     question: {
       id: "",
-      responseTemplate: ""
+      responseTemplate: "",
+      inputType: "string",
+      buttons: []
     },
     answers: {},
     messages: []
@@ -43,20 +52,33 @@ const ChatManager = () => {
       const responseTemplate = !isEmpty(data.responses)
         ? data.responses[0]
         : "";
+      const inputType = isEmpty(data.inputs) ? "buttons" : data.inputs[0].type;
+      // @ts-ignore
+      const buttons: Array<ButtonType> = data.buttons.map(button => ({
+        label: button.label.title,
+        value: button.value
+      }));
 
       setState({
         ...state,
         messages,
-        question: { id: data.id, responseTemplate }
+        question: { id: data.id, responseTemplate, inputType, buttons }
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateHash]);
 
-  const saveAnswer = (id: string) => (value: string) => {
+  const saveAnswer = (id: string) => (value: string, displayValue?: string) => {
     const userMessage: MessageGroupType = {
       type: "user",
-      messages: [buildUserResponse(id, state.question.responseTemplate, value)]
+      messages: [
+        buildUserResponse(
+          id,
+          state.question.responseTemplate,
+          value,
+          displayValue
+        )
+      ]
     };
 
     const answers = { ...state.answers, [id]: value };
@@ -70,11 +92,18 @@ const ChatManager = () => {
     });
   };
 
+  const question = {
+    inputType: state.question.inputType,
+    additionalData: {
+      buttons: state.question.buttons
+    }
+  };
+
   return (
     <ChatWrapper
-      inputType="string"
       saveAnswer={saveAnswer(state.question.id)}
       messages={state.messages}
+      question={question}
     />
   );
 };
@@ -82,8 +111,10 @@ const ChatManager = () => {
 const buildUserResponse = (
   questionId: string,
   template: string,
-  value: string
+  value: string,
+  displayValue?: string
 ) => {
+  if (displayValue) return displayValue;
   if (template === "") return value;
 
   const regex = new RegExp("{{answers." + questionId + "}}", "g");

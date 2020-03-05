@@ -9,13 +9,24 @@ type MessageGroupType = {
   messages: Array<string>;
 };
 type InputType = "number" | "string" | "buttons";
-type ChatWrapperProps = {
-  saveAnswer: (value: string) => void;
+
+type ButtonType = {
+  label: string;
+  value: string;
+};
+type QuestionType = {
   inputType: InputType;
+  additionalData: {
+    buttons: Array<ButtonType>;
+  };
+};
+type ChatWrapperProps = {
+  saveAnswer: (value: string, displayValue?: string) => void;
   messages: Array<MessageGroupType>;
+  question: QuestionType;
 };
 
-const ChatWrapper = ({ saveAnswer, inputType, messages }: ChatWrapperProps) => (
+const ChatWrapper = ({ saveAnswer, messages, question }: ChatWrapperProps) => (
   <div className="chat-wrapper">
     {messages.map(messageGroup => (
       <MessageGroup style={messageGroup.type}>
@@ -24,7 +35,11 @@ const ChatWrapper = ({ saveAnswer, inputType, messages }: ChatWrapperProps) => (
         ))}
       </MessageGroup>
     ))}
-    <InputTypeChooser type={inputType} finishCallback={saveAnswer} />
+    <InputTypeChooser
+      type={question.inputType}
+      additionalData={question.additionalData}
+      finishCallback={saveAnswer}
+    />
   </div>
 );
 
