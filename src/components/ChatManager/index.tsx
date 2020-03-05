@@ -1,11 +1,7 @@
-/* eslint-disable react/style-prop-object */
-
 import React, { useState, useEffect } from "react";
 
-import { UserIcon, InputTypeChooser } from "components";
+import { ChatWrapper } from "components";
 import { useConversationApi } from "services";
-
-import "./styles.scss";
 
 type MessageGroupType = {
   type: "robot" | "user";
@@ -22,9 +18,6 @@ type ChatManagerState = {
   };
   messages: Array<MessageGroupType>;
 };
-
-const isEmpty = (array: Array<any>) =>
-  array === undefined || array.length === 0;
 
 const ChatManager = () => {
   const [state, setState] = useState<ChatManagerState>({
@@ -44,7 +37,7 @@ const ChatManager = () => {
       const robotMessages: MessageGroupType = {
         type: "robot",
         // @ts-ignore
-        messages: data.messages.map(m => m.value)
+        messages: data.messages.map(message => message.value)
       };
       const messages = [...state.messages, robotMessages];
       const responseTemplate = !isEmpty(data.responses)
@@ -59,18 +52,6 @@ const ChatManager = () => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateHash]);
-
-  const buildUserResponse = (
-    questionId: string,
-    template: string,
-    value: string
-  ) => {
-    if (template === "") return value;
-
-    const regex = new RegExp("{{answers." + questionId + "}}", "g");
-
-    return template.replace(regex, value);
-  };
 
   const saveAnswer = (id: string) => (value: string) => {
     const userMessage: MessageGroupType = {
@@ -89,8 +70,6 @@ const ChatManager = () => {
     });
   };
 
-  console.log(state);
-
   return (
     <ChatWrapper
       inputType="string"
@@ -100,48 +79,19 @@ const ChatManager = () => {
   );
 };
 
-type InputType = "number" | "string" | "buttons";
-type ChatProps = {
-  saveAnswer: (value: string) => void;
-  inputType: InputType;
-  messages: Array<MessageGroupType>;
+const buildUserResponse = (
+  questionId: string,
+  template: string,
+  value: string
+) => {
+  if (template === "") return value;
+
+  const regex = new RegExp("{{answers." + questionId + "}}", "g");
+
+  return template.replace(regex, value);
 };
 
-const ChatWrapper = ({ saveAnswer, inputType, messages }: ChatProps) => (
-  <div className="chat-wrapper">
-    {messages.map(messageGroup => (
-      <MessageGroup style={messageGroup.type}>
-        {messageGroup.messages.map(message => (
-          <Message text={message} />
-        ))}
-      </MessageGroup>
-    ))}
-    <InputTypeChooser type={inputType} finishCallback={saveAnswer} />
-  </div>
-);
-
-type MessageProps = {
-  text: string;
-};
-
-type MessageGroupProps = {
-  children: React.ReactNode;
-  style: "user" | "robot";
-};
-
-const MessageGroup = ({ children, style }: MessageGroupProps) => {
-  const classes =
-    "message-group message-group_theme_" +
-    (style === "robot" ? "robot" : "user");
-
-  return (
-    <div className={classes}>
-      {style === "robot" && <UserIcon />}
-      <div className="message-group__messages">{children}</div>
-      {style === "user" && <UserIcon name="Wanderlei da Silva" />}
-    </div>
-  );
-};
-const Message = ({ text }: MessageProps) => <p className="message">{text}</p>;
+const isEmpty = (array: Array<any>) =>
+  array === undefined || array.length === 0;
 
 export { ChatManager };
