@@ -16,6 +16,7 @@ const TextInput = ({
   isValid = () => true
 }: TextInputProps) => (
   <input
+    autoFocus
     className="text-input"
     type="text"
     value={value}
