@@ -13,16 +13,25 @@ type MessageGroupType = {
 };
 
 type ChatManagerState = {
-  currentQuestionId: string;
+  question: {
+    id: string;
+    responseTemplate: string;
+  };
   answers: {
     [key: string]: string;
   };
   messages: Array<MessageGroupType>;
 };
 
+const isEmpty = (array: Array<any>) =>
+  array === undefined || array.length === 0;
+
 const ChatManager = () => {
   const [state, setState] = useState<ChatManagerState>({
-    currentQuestionId: "",
+    question: {
+      id: "",
+      responseTemplate: ""
+    },
     answers: {},
     messages: []
   });
@@ -32,23 +41,41 @@ const ChatManager = () => {
   const dateHash = JSON.stringify(data);
   useEffect(() => {
     if (isLoaded) {
-      const robotMessages = {
+      const robotMessages: MessageGroupType = {
         type: "robot",
         // @ts-ignore
         messages: data.messages.map(m => m.value)
       };
       const messages = [...state.messages, robotMessages];
+      const responseTemplate = !isEmpty(data.responses)
+        ? data.responses[0]
+        : "";
 
-      // @ts-ignore
-      setState({ ...state, messages, currentQuestionId: data.id });
+      setState({
+        ...state,
+        messages,
+        question: { id: data.id, responseTemplate }
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dateHash]);
 
+  const buildUserResponse = (
+    questionId: string,
+    template: string,
+    value: string
+  ) => {
+    if (template === "") return value;
+
+    const regex = new RegExp("{{answers." + questionId + "}}", "g");
+
+    return template.replace(regex, value);
+  };
+
   const saveAnswer = (id: string) => (value: string) => {
     const userMessage: MessageGroupType = {
       type: "user",
-      messages: [value]
+      messages: [buildUserResponse(id, state.question.responseTemplate, value)]
     };
 
     const answers = { ...state.answers, [id]: value };
@@ -62,10 +89,12 @@ const ChatManager = () => {
     });
   };
 
+  console.log(state);
+
   return (
     <ChatWrapper
       inputType="string"
-      saveAnswer={saveAnswer(state.currentQuestionId)}
+      saveAnswer={saveAnswer(state.question.id)}
     />
   );
 };
