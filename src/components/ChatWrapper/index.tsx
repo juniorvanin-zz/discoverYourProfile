@@ -59,6 +59,11 @@ const MessageGroup = ({ children, style }: MessageGroupProps) => (
     {style === "user" && <UserIcon name="User" />}
   </div>
 );
-const Message = ({ text }: MessageProps) => <p className="message">{text}</p>;
+const Message = ({ text }: MessageProps) => (
+  <p className="message">{clearMessage(text)}</p>
+);
+
+const clearMessage = (text: string) =>
+  text.replace(/\^500|\^1000|<erase>|\^300/g, "");
 
 export { ChatWrapper };
