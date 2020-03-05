@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 
-import { Typing, UserIcon, InputTypeChooser } from "components";
+import { UserIcon, InputTypeChooser } from "components";
 import { useConversationApi } from "services";
 
 import "./styles.scss";
@@ -95,6 +95,7 @@ const ChatManager = () => {
     <ChatWrapper
       inputType="string"
       saveAnswer={saveAnswer(state.question.id)}
+      messages={state.messages}
     />
   );
 };
@@ -103,28 +104,18 @@ type InputType = "number" | "string" | "buttons";
 type ChatProps = {
   saveAnswer: (value: string) => void;
   inputType: InputType;
+  messages: Array<MessageGroupType>;
 };
 
-const ChatWrapper = ({ saveAnswer, inputType }: ChatProps) => (
+const ChatWrapper = ({ saveAnswer, inputType, messages }: ChatProps) => (
   <div className="chat-wrapper">
-    <MessageGroup style="robot">
-      <Message text="Oi, eu sou o Warren! Vou ajudar você a investir o seu dinheiro da melhor forma! Para isso, quero conhecer você melhor." />
-      <Message text="Como eu posso te chamar?" />
-    </MessageGroup>
-    <MessageGroup style="user">
-      <Message text="Meu nome é Junior Vanin" />
-    </MessageGroup>
-    <MessageGroup style="robot">
-      <Message text="Prazer, Junior Vanin. ^1000 Para ajudar você a ter os melhores rendimentos, ^500 preciso descobrir o seu perfil de investidor, ^500 então farei algumas perguntas rápidas." />
-      <Message text="Qual é a sua idade?" />
-    </MessageGroup>
-    <MessageGroup style="user">
-      <Message text="Eu tenho 26 anos." />
-    </MessageGroup>
-    <MessageGroup style="robot">
-      <Message text="Os 30 estão chegando!" />
-      <Typing />
-    </MessageGroup>
+    {messages.map(messageGroup => (
+      <MessageGroup style={messageGroup.type}>
+        {messageGroup.messages.map(message => (
+          <Message text={message} />
+        ))}
+      </MessageGroup>
+    ))}
     <InputTypeChooser type={inputType} finishCallback={saveAnswer} />
   </div>
 );
