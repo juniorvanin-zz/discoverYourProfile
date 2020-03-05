@@ -21,7 +21,11 @@ const TextInputActionBar = ({ finishCallback }: InputActionBarProps) => {
   return (
     <ActionBar>
       <>
-        <TextInput value={value} setValue={setValue} />
+        <TextInput
+          value={value}
+          setValue={setValue}
+          onEnterKey={() => finishCallback(value)}
+        />
         <Button
           disabled={isContinueBtnDisable}
           handleOnClick={() => finishCallback(value)}
@@ -38,7 +42,12 @@ const NumberInputActionBar = ({ finishCallback }: InputActionBarProps) => {
   return (
     <ActionBar>
       <>
-        <TextInput value={value} setValue={setValue} isValid={isNumber} />
+        <TextInput
+          value={value}
+          setValue={setValue}
+          isValid={isNumber}
+          onEnterKey={() => finishCallback(value)}
+        />
         <Button
           disabled={isContinueBtnDisable}
           handleOnClick={() => finishCallback(value)}

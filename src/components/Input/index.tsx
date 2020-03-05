@@ -6,17 +6,24 @@ type TextInputProps = {
   value: string;
   setValue: (newValue: string) => void;
   isValid?: (value: string) => boolean;
+  onEnterKey: () => void;
 };
 
 const TextInput = ({
   value,
   setValue,
+  onEnterKey,
   isValid = () => true
 }: TextInputProps) => (
   <input
     className="text-input"
     type="text"
     value={value}
+    onKeyDown={e => {
+      if (value !== "" && e.which === 13) {
+        onEnterKey();
+      }
+    }}
     onChange={e => {
       const newValue = e.target.value;
 
