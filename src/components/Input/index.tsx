@@ -6,7 +6,7 @@ type TextInputProps = {
   value: string;
   setValue: (newValue: string) => void;
   isValid?: (value: string) => boolean;
-  onEnterKey: () => void;
+  onEnterKey?: () => void;
 };
 
 const TextInput = ({
@@ -16,13 +16,16 @@ const TextInput = ({
   isValid = () => true
 }: TextInputProps) => (
   <input
+    data-testid="text-input"
     autoFocus
     className="text-input"
     type="text"
     value={value}
     onKeyDown={e => {
-      if (value !== "" && e.which === 13) {
-        onEnterKey();
+      if (onEnterKey) {
+        if (value !== "" && e.which === 13) {
+          onEnterKey();
+        }
       }
     }}
     onChange={e => {
@@ -46,7 +49,12 @@ const Button = ({
   title = "OK",
   handleOnClick
 }: ButtonProps) => (
-  <button className="button" disabled={disabled} onClick={handleOnClick}>
+  <button
+    data-testid="button-input"
+    className="button"
+    disabled={disabled}
+    onClick={handleOnClick}
+  >
     {title}
   </button>
 );

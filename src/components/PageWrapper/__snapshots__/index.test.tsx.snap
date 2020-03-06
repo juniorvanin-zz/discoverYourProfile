@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`PageWrapper creates page wrapper using title and children 1`] = `
+<div>
+  <main>
+    <h1>
+       title
+    </h1>
+    <section
+      class="main-content"
+    >
+      <p>
+        some children
+      </p>
+    </section>
+  </main>
+</div>
+`;

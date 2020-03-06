@@ -32,9 +32,24 @@
 .button:hover {
   opacity: 0.6;
   cursor: pointer;
+  animation: zoom 0.5s forwards;
+}
+
+.button:focus {
+  outline: none;
+  animation: zoom 0.5s forwards;
 }
 
 .button:disabled {
   background-color: #bdbdbd;
   color: #5d5d5d;
+}
+
+@keyframes zoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
 }
