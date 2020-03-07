@@ -41,6 +41,10 @@ const ChatManager = () => {
   const [data, isLoaded, setPayload] = useConversationApi();
 
   const dateHash = JSON.stringify(data);
+
+  useEffect(() => {
+    window.scrollTo(0, document.body.scrollHeight);
+  });
   useEffect(() => {
     if (isLoaded) {
       const robotMessages: MessageGroupType = {

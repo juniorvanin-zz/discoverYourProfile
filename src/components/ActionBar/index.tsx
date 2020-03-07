@@ -93,7 +93,7 @@ type ButtonType = {
 
 type InputTypeChooserProps = {
   type: InputType;
-  additionalData: {
+  additionalData?: {
     buttons: Array<ButtonType>;
   };
   finishCallback: (value: string, displayValue?: string) => void;
@@ -111,7 +111,7 @@ const InputTypeChooser = ({
       return (
         <ButtonsInputActionBar
           finishCallback={finishCallback}
-          buttons={additionalData.buttons.map(button => ({
+          buttons={additionalData!.buttons.map(button => ({
             title: button.label,
             value: button.value
           }))}

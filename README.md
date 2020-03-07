@@ -1,68 +1,22 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# How to run this application
 
-## Available Scripts
+You can run the application directly using node 12 with `npm install` and `npm start`, it will run the application using the default create react app development serve.
 
-In the project directory, you can run:
+If you prefer to use a _docker_ machine, no problem! There is already a dockerfile set up that builds this application for production envronment, you just need docker installed in your machine and run the commands `make docker-build` and `make run`.
 
-### `yarn start`
+The application is going to be available using `localhost:8080`.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# Running the tests
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+I decided to use `react-testing-library` together with `jest` for unit testing this application. Not all components are tested, but you can find tests of snapshot(html generated) and behavioral testing(firing events and asserting text/output).
 
-### `yarn test`
+Just run: `npm tests`
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# Interesting decisions
 
-### `yarn build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `yarn eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
-
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+- Using React Hooks, for applying side effects and state management, also I have implemented my own hook for integration with message api.
+- I try to use BEM methodology for creating an easy to mantain and react css.
+- I use SASS as CSS pre processor.
+- I decided to use Typescript for more safety when working with JS.
+- Dockerized application.
+- The idea of sepation of concerns between components, scenes and services. All components should live inside of components folder. All scenes(they are "pages" in a single page application) live insede of scenes folder and all integrations with external api, live inside of services folder.

@@ -5,7 +5,7 @@ import { PageWrapper } from "./";
 
 jest.mock("components", () => {
   return {
-    Header: ({ title }: { title: string }) => <h1> title</h1>
+    Header: ({ title }: { title: string }) => <h1> {title}</h1>
   };
 });
 

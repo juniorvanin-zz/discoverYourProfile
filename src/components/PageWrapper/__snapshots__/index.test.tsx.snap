@@ -4,7 +4,8 @@ exports[`PageWrapper creates page wrapper using title and children 1`] = `
 <div>
   <main>
     <h1>
-       title
+       
+      some title
     </h1>
     <section
       class="main-content"
