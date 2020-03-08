@@ -13,11 +13,13 @@ type ButtonType = {
   value: string;
 };
 
+type InputType = "string" | "number" | "buttons";
+
 type ChatManagerState = {
   question: {
     id: string;
     responseTemplate: string;
-    inputType: "string" | "number" | "buttons";
+    inputType: InputType;
     buttons: Array<ButtonType>;
   };
   answers: {
@@ -45,20 +47,24 @@ const ChatManager = () => {
   useEffect(() => {
     window.scrollTo(0, document.body.scrollHeight);
   });
+
   useEffect(() => {
     if (isLoaded) {
-      const robotMessages: MessageGroupType = {
-        type: "robot",
-        // @ts-ignore
-        messages: data.messages.map(message => message.value)
-      };
-      const messages = [...state.messages, robotMessages];
+      const messages: Array<MessageGroupType> = [
+        ...state.messages,
+        {
+          type: "robot",
+          messages: data.messages.map(message => message.value)
+        }
+      ];
+
       const responseTemplate = !isEmpty(data.responses)
         ? data.responses[0]
         : "";
-      const inputType = isEmpty(data.inputs) ? "buttons" : data.inputs[0].type;
-      // @ts-ignore
-      const buttons: Array<ButtonType> = data.buttons.map(button => ({
+      let inputType: InputType = isEmpty(data.inputs)
+        ? "buttons"
+        : data.inputs[0].type;
+      let buttons: Array<ButtonType> = data.buttons.map(button => ({
         label: button.label.title,
         value: button.value
       }));
