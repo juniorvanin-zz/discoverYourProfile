@@ -1,12 +1,14 @@
+@import "variables.scss";
+
 .footer {
-  margin-top: 50px;
-  background-color: #f1f0f0;
-  padding: 20px;
+  margin-top: $m-12;
+  background-color: $color-beige;
+  padding: $p-5;
   display: flex;
   justify-content: center;
   position: fixed;
   bottom: 0;
-  width: 100%;
+  width: $w-full;
   left: 0;
   box-sizing: border-box;
 }

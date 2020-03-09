@@ -1,17 +1,19 @@
+@import "variables.scss";
+
 .icon {
-  width: 36px;
-  height: 36px;
+  width: $w-9;
+  height: $h-9;
   justify-content: center;
   align-items: center;
   align-self: flex-end;
-  margin: 10px 15px;
+  margin: $m-3 $m-4;
   display: flex;
 }
 
 .user-icon {
-  background-color: #333333;
-  color: white;
-  font-size: 18px;
+  background-color: $color-dark-grey;
+  color: $color-white;
+  font-size: $font-regular;
   font-weight: bold;
   border-radius: 18px;
 }

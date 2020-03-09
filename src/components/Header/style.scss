@@ -1,15 +1,17 @@
+@import "variables.scss";
+
 .header {
   position: absolute;
   top: 0;
-  background-color: #ee2e5d;
-  width: 100%;
+  background-color: $color-pink;
+  width: $w-full;
 
   &__title {
-    font-size: 13px;
+    font-size: $font-small;
     text-transform: uppercase;
-    color: white;
+    color: $color-white;
     text-align: center;
-    padding: 16px;
+    padding: $p-3;
     letter-spacing: 1px;
   }
 }

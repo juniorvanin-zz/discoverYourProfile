@@ -8,7 +8,7 @@ The application is going to be available using `localhost:8080`.
 
 # Running the tests
 
-I decided to use `react-testing-library` together with `jest` for unit testing this application. Not all components are tested, but you can find tests of snapshot(html generated) and behavioral testing(firing events and asserting text/output).
+I decided to use `react-testing-library` together with `jest` for unit testing this application. Not all components are tested, but you can find tests of snapshot(html generated) and behavioral testing(firing events and asserting text/output), including the ones related to the custom react hook for conversation API.
 
 Just run: `npm tests`
 
@@ -20,3 +20,5 @@ Just run: `npm tests`
 - I decided to use Typescript for more safety when working with JS.
 - Dockerized application.
 - The idea of sepation of concerns between components, scenes and services. All components should live inside of components folder. All scenes(they are "pages" in a single page application) live insede of scenes folder and all integrations with external api, live inside of services folder.
+- SCSS shared variables
+- I tried to use a pre-defined range of css sizes(for padding, margins, width...), all of them using REM size. The main idea behind this decision is avoid pixel perfect.
