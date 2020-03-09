@@ -1,6 +1,6 @@
 @import "variables.scss";
 
-.footer {
+.action-bar {
   margin-top: $m-12;
   background-color: $color-beige;
   padding: $p-5;
@@ -11,4 +11,9 @@
   width: $w-full;
   left: 0;
   box-sizing: border-box;
+  flex-direction: column;
+
+  @media only screen and (min-width: 600px) {
+    flex-direction: row;
+  }
 }

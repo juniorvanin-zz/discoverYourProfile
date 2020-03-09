@@ -4,13 +4,19 @@
   background-color: transparent;
   border: 0;
   outline: none;
-  font-size: $font-bigger;
+  font-size: $font-biggest;
   font-family: "Montserrat";
   color: $color-dark-grey;
   border-bottom: 1px solid $color-dark-grey;
-  padding: $p-2;
+  padding: $p-3;
   flex-grow: 1;
-  margin-right: $m-5;
+  margin-bottom: $m-5;
+
+  @media only screen and (min-width: 600px) {
+    font-size: $font-bigger;
+    margin-right: $m-5;
+    margin-bottom: 0;
+  }
 }
 
 .text-input::placeholder {
@@ -22,13 +28,17 @@
   padding: $p-5 $p-9;
   background-color: $color-pink;
   color: $color-white;
-  border-radius: 30px;
   font-size: $font-regular;
   font-family: $font-family;
   text-transform: uppercase;
   border: 0;
   font-weight: bold;
-  margin: 0 $m-1;
+  margin: $m-1;
+
+  @media only screen and (min-width: 600px) {
+    margin: 0 $m-1;
+    border-radius: 30px;
+  }
 }
 
 .button:hover {

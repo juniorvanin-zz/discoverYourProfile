@@ -22,3 +22,4 @@ Just run: `npm tests`
 - The idea of sepation of concerns between components, scenes and services. All components should live inside of components folder. All scenes(they are "pages" in a single page application) live insede of scenes folder and all integrations with external api, live inside of services folder.
 - SCSS shared variables
 - I tried to use a pre-defined range of css sizes(for padding, margins, width...), all of them using REM size. The main idea behind this decision is avoid pixel perfect.
+- This app is "mobile friendly", but it was not made using mobile first methodology, I am not a UX but I have given my best to make something that is response and would work in both desktop and mobile devices.

@@ -17,7 +17,6 @@ const TextInput = ({
 }: TextInputProps) => (
   <input
     data-testid="text-input"
-    autoFocus
     className="text-input"
     type="text"
     value={value}

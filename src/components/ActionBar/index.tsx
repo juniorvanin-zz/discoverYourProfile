@@ -7,7 +7,7 @@ import "./style.scss";
 type ActionBarProps = { children: React.ReactElement };
 
 const ActionBar = ({ children }: ActionBarProps) => (
-  <footer className="footer">{children}</footer>
+  <div className="action-bar">{children}</div>
 );
 
 type InputActionBarProps = {
